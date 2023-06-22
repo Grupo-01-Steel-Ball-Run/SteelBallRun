@@ -215,7 +215,7 @@
 
 
 
-    for (let i = 1; i <= qtde_voltas; i++) {
+    for (let i = 0; i < qtde_voltas; i++) {
       div_resp.innerHTML += `<span class='numeroVolta'>${i+1
       }ª Volta</span><br>`;
       for (let j = 0; j < lista_cavalo.length; j++) {
@@ -290,7 +290,15 @@
   function ver_podio() {
     let nome_podio = []
     let tempo_podio = []
-    for (let i = 0; i < 3; i++) {
+    let qtd_podio = 0
+
+    if(lista_cavalo.length <= 2){
+      qtd_podio = 2
+    }else{
+      qtd_podio = 3
+    }
+
+    for (let i = 0; i < qtd_podio; i++) {
       let indexDo = lista_tempo.indexOf(Math.min(...lista_tempo))
       nome_podio.push(lista_cavalo[indexDo])
       tempo_podio.push(lista_tempo[indexDo])
@@ -300,24 +308,36 @@
     }
     nome_podio.reverse()
     tempo_podio.reverse()
+    console.log(nome_podio)
+
 
     div_resp.style.display = 'none'
     btn_podio.style.display = 'none'
     div_podio.style.display = 'flex'
 
-    cavalo_vencedor = nome_podio[0]
+    cavalo_vencedor = nome_podio[0];
+
+    if(cavalo_vencedor == cavalo_de_ouro){
+      alert('Você venceu a aposta!');
+    }
 
     div_podio.innerHTML += `
-            <div class='lugar2'> 
-              ${nome_podio[1]}
+            <div class='lugar_2 podio'> 
+              <h3>${nome_podio[1]}</h3>
+              <img src='assets/imgs/cavalo2.png'>
             </div>
-            <div class='lugar1'> 
-              ${nome_podio[0]}
+            <div class='lugar_1 podio'> 
+              <h3>${nome_podio[0]}</h3>
+              <img src='assets/imgs/cavalo1.png'>
             </div>
-            <div class='lugar3'> 
-              ${nome_podio[2]}
+            <div class='lugar_3 podio' id='terceiro_lugar'> 
+              <h3>${nome_podio[2]}</h3>
+              <img src='assets/imgs/cavalo3.png'>
             </div>
       `
+      if(nome_podio.length == 2){
+        terceiro_lugar.style = 'display:none;';
+      }
       body.style =
       `
       background-image: url(assets/imgs/3.svg);
