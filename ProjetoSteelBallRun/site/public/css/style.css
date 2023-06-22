@@ -25,7 +25,7 @@ body{
     background-repeat: no-repeat;
 }
 
-#divCavalos, #divVoltas{
+#div_cavalos, #div_voltas{
     width: 80%;
     height: 50%;
     display: flex;
@@ -36,16 +36,16 @@ body{
     margin-top: 15%;
 }
 
-#divCavalos{
+#div_cavalos{
     display: none;
 }
 
-#divVoltas button{
+#div_voltas button{
     background-image: none;
     background-color: chocolate;
 }
 
-#divVoltas .btnText{
+#div_voltas .btn_text{
     font-family: 'lobster';
     background-color: rgb(126, 66, 23);
     color: white;
@@ -55,7 +55,7 @@ body{
     text-align: center;
 }
 
-#divVoltas select{
+#div_voltas select{
     width: 30%;
     height: 20%;
     border-radius: .5rem;
@@ -64,7 +64,7 @@ body{
     font-family: 'lobster';
 }
 
-#divVoltas .grupoElemento{
+#div_voltas .grupo_elemento{
     width: 100%;
     height: 100%;
     display: flex;
@@ -73,7 +73,7 @@ body{
     align-items: center;
 }
 
-#divErro{
+#div_erro{
     display: none;
     width: 300px;
     margin-right: 30px;
@@ -91,7 +91,7 @@ body{
 }
 
 
-#divResp{
+#div_resp{
     display:none;
     width: 35%;
     overflow-y: auto;
@@ -129,7 +129,7 @@ button{
     box-shadow: 0 5px 10px black;
 }
 
-.btnText{
+.btn_text{
     font-family: 'lobster';
     background-color: rgb(250, 83, 83);
     color: white;
@@ -139,7 +139,7 @@ button{
     text-align: center;
 }
 
-.cardCavalo{
+.card_cavalo{
     width: 80%;
     height: auto;
     display: flex;
@@ -149,7 +149,7 @@ button{
     padding: 10px;
 }
 
-.numeroVolta{
+.numero_volta{
     margin-left: 10px;
     font-size: 30px;
     font-weight: bold;
@@ -157,7 +157,7 @@ button{
     letter-spacing: 8px;
 }
 
-.nomeCavalo{
+.nome_cavalo{
     font-weight: 600;
     color: white;
 }

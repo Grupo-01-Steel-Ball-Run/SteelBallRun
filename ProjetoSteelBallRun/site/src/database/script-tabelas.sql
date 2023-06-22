@@ -4,14 +4,15 @@ CREATE DATABASE steel_ball_run;
 USE steel_ball_run;
 
 CREATE TABLE Usuario(
-idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-nick VARCHAR(25)
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    senha VARCHAR(45),
+    nick VARCHAR(25)
 );
 
 CREATE TABLE Partida(
-idPartida INT PRIMARY KEY AUTO_INCREMENT,
-voltas INT,
-qtdCavalos INT
+    idPartida INT PRIMARY KEY AUTO_INCREMENT,
+    voltas INT,
+    qtdCavalos INT
 );
 
 CREATE TABLE Resultado(
