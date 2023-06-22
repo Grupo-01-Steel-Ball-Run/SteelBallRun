@@ -447,6 +447,9 @@
     return false;
   }
 
+
+
+  
   function salvar_partida() {
     let = resultadoPartidaVar
     cobre_pagina.style.display = `flex`;
@@ -555,9 +558,7 @@
         console.log(resposta);
 
         resposta.json().then(json => {
-          sessionStorage.NICK_USUARIO = json.nick;
-          sessionStorage.ID_USUARIO = json.idUsuario;
-          div_salvar.style.display = `flex`;
+
         });
 
       } else {
@@ -580,10 +581,7 @@
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        fkPartidaServer: sessionStorage.ID_PARTIDA,
         fkUsuario: sessionStorage.ID_USUARIO,
-        cavaloServer: nome_podio[0],
-        resultadoServer: resultadoParidaVar
       })
 
     }).then(function (resposta) {
