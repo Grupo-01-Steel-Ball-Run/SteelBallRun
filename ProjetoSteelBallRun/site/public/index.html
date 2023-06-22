@@ -50,9 +50,9 @@
   <div id="div_resp" class="div_secao"></div>
 
   <div class="tela_podio" id="tela_podio">
-    <button class="btn btn_salvar_podio">Salvar Pódio</button>
+    <button onclick="telaLogin()" class="btn btn_salvar_podio">Salvar Pódio</button>
     <div id="div_podio">
-      <div class="card_usuario">
+      <div id="card_usuarioo" class="card_usuario">
         <div id="usuario_conexao">
           <div id='div_login'>
             <h1>Faça o login para salvar sua partida</h1>
@@ -113,6 +113,14 @@
 
 </html>
 <script>
+
+function telaLogin(){
+  card_usuario0.style.display = 'flex'
+  usuario_conexao.style.display = 'flex'
+  div_login.style.display = 'flex'
+}
+
+
   var cavalo_de_ouro = ''
   var cavalo_vencedor
   var qtde_voltas;
