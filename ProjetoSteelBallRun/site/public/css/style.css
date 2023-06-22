@@ -172,4 +172,10 @@ button{
     display: none;
 }
 
+#div_podio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* ABAIXO ESTÁ A ESTILIZAÇÃO DA PARTE LEADERBOARD E CONEXAO DO USUARIO */

@@ -60,7 +60,6 @@
 
   
   <div id="div_podio" style="display: none;">
-    <button onclick="salvar_registro()">Salvar meu registro!</button>
     <div class="card_usuario" style="display: none;">
       <div id="usuario_conexao">
         <div id='div_login'>
@@ -89,7 +88,7 @@
         <div id="div_salvar">
           <h1>Salve sua partida!</h1>
           <h3>Salve e participe do LeaderBoard!</h3>
-          <button onclick="salvarPartida()">Salvar Partida</button>
+          <button onclick="salvar_partida()">Salvar Partida</button>
         </div>
       </div>
     </div>
@@ -352,7 +351,7 @@
     return false;
   }
 
-  function salvarPartida() {
+  function salvar_partida() {
     cobre_pagina.style.display = `flex`;
   }
 </script>
