@@ -58,7 +58,7 @@
   <button id="btn_largada" onclick="iniciar()">Largada</button>
   <button id="btn_podio" onclick="ver_podio()" style="display: none;">Ver o pódio</button>
 
-  
+
   <div id="div_podio" style="display: none;">
     <div class="card_usuario" style="display: none;">
       <div id="usuario_conexao">
@@ -92,11 +92,14 @@
         </div>
       </div>
     </div>
+    <div id="leaderboard"></div>
   </div>
 </body>
 
 </html>
 <script>
+  var cavalo_de_ouro = ''
+  var cavalo_vencedor
   var qtde_voltas;
   var qtde_cavalos;
   var lista_cavalo = [];
@@ -148,7 +151,7 @@
     }
 
 
-    
+
     for (let i = 1; i <= qtde_voltas; i++) {
       div_resp.innerHTML += `<span class='numeroVolta'>${i}ª Volta</span><br>`;
       for (let j = 0; j < lista_cavalo.length; j++) {
@@ -204,6 +207,8 @@
     div_resp.style.display = 'none'
     btn_podio.style.display = 'none'
     div_podio.style.display = 'flex'
+
+    cavalo_vencedor = nome_podio[0]
 
     div_podio.innerHTML += `
             <div class='lugar2'> 
@@ -331,7 +336,7 @@
 
         resposta.json().then(json => {
           sessionStorage.NICK_USUARIO = json.nick;
-          alert(json.senha)
+          sessionStorage.ID_USUARIO = json.idUsuario;
           div_salvar.style.display = `flex`;
         });
 
@@ -352,6 +357,123 @@
   }
 
   function salvar_partida() {
+    let = resultadoPartidaVar
     cobre_pagina.style.display = `flex`;
+
+    fetch("/partidas/cadastrarPartida", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        qtdeCavalosServer: qtde_cavalos.value,
+        qtdeVoltasServer: qtde_voltas.value
+      })
+
+    }).then(function (resposta) {
+
+      console.log("resposta: ", resposta);
+
+      if (resposta.ok) {
+
+      } else {
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
+    fetch("/usuarios/autenticarPartida", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+        console.log(resposta);
+
+        resposta.json().then(json => {
+          sessionStorage.ID_PARTIDA = json.idPartida;
+        });
+      }
+    })
+
+    if(cavalo_de_ouro == cavalo_vencedor){
+      resultadoPartidaVar = 'Ganhador'
+    }else{
+      resultadoPartidaVar = 'Perdedor'
+    }
+
+    fetch("/partidas/cadastrarResultado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fkPartidaServer: sessionStorage.ID_PARTIDA,
+        fkUsuario: sessionStorage.ID_USUARIO,
+        cavaloServer: nome_podio[0],
+        resultadoServer: resultadoParidaVar
+      })
+
+
+    }).then(function (resposta) {
+
+      console.log("resposta: ", resposta);
+
+      if (resposta.ok) {
+
+      } else {
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
+    fetch("/usuarios/autenticarResultado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+        console.log(resposta);
+
+        resposta.json().then(json => {
+          sessionStorage.ID_RESULTADO = json.idResultado;
+        });
+      }
+    })
+
+    fetch("/leaderboard/cadastrarLeaderboard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fkPartidaServer: sessionStorage.ID_PARTIDA,
+        fkUsuario: sessionStorage.ID_USUARIO,
+        cavaloServer: nome_podio[0],
+        resultadoServer: resultadoParidaVar
+      })
+
+
+    }).then(function (resposta) {
+
+      console.log("resposta: ", resposta);
+
+      if (resposta.ok) {
+
+      } else {
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
   }
 </script>
