@@ -49,36 +49,39 @@
 
   <div id="div_resp" class="div_secao"></div>
 
-  <div id="div_podio">
-    <div class="card_usuario">
-      <div id="usuario_conexao">
-        <div id='div_login'>
-          <h1>Faça o login para salvar sua partida</h1>
-          <b>Nome de usuario</b>
-          <input type="text" id="ipt_nome_usuario">
-          <b>Senha</b>
-          <input type="password" id="ipt_senha_usuario">
-          <h4>Ainda não possui uma conta? <p onclick="cadastro()">Crie aqui!</p>
-          </h4>
-          <button onclick="login()">Login</button>
-          <button onclick="voltar('sair')">Sair</button>
-        </div>
-        <div id="div_cadastro">
-          <h1>Bem vindo ao Stell Ball Run!</h1>
-          <h3>Faça seu cadastro para salvar suas partidas e participar do nosso Leaderboard!</h3>
-          <b>Nome de usuario</b>
-          <input type="text" id="ipt_nome_cadastro">
-          <b>Senha</b>
-          <input type="text" id="ipt_senha_cadastro">
-          <b>Repetir Senha</b>
-          <input type="text" id="ipt_confirmacao_cadastro">
-          <button onclick="cadastrar()">Cadastre-se</button>
-          <button onclick="voltar('login')">Voltar para o Login</button>
-        </div>
-        <div id="div_salvar">
-          <h1>Salve sua partida!</h1>
-          <h3>Salve e participe do LeaderBoard!</h3>
-          <button onclick="salvar_partida()">Salvar Partida</button>
+  <div class="tela_podio" id="tela_podio">
+    <button class="btn btn_salvar_podio">Salvar Pódio</button>
+    <div id="div_podio">
+      <div class="card_usuario">
+        <div id="usuario_conexao">
+          <div id='div_login'>
+            <h1>Faça o login para salvar sua partida</h1>
+            <b>Nome de usuario</b>
+            <input type="text" id="ipt_nome_usuario">
+            <b>Senha</b>
+            <input type="password" id="ipt_senha_usuario">
+            <h4>Ainda não possui uma conta? <p onclick="cadastro()">Crie aqui!</p>
+            </h4>
+            <button onclick="login()">Login</button>
+            <button onclick="voltar('sair')">Sair</button>
+          </div>
+          <div id="div_cadastro">
+            <h1>Bem vindo ao Stell Ball Run!</h1>
+            <h3>Faça seu cadastro para salvar suas partidas e participar do nosso Leaderboard!</h3>
+            <b>Nome de usuario</b>
+            <input type="text" id="ipt_nome_cadastro">
+            <b>Senha</b>
+            <input type="text" id="ipt_senha_cadastro">
+            <b>Repetir Senha</b>
+            <input type="text" id="ipt_confirmacao_cadastro">
+            <button onclick="cadastrar()">Cadastre-se</button>
+            <button onclick="voltar('login')">Voltar para o Login</button>
+          </div>
+          <div id="div_salvar">
+            <h1>Salve sua partida!</h1>
+            <h3>Salve e participe do LeaderBoard!</h3>
+            <button onclick="salvar_partida()">Salvar Partida</button>
+          </div>
         </div>
       </div>
     </div>
@@ -216,8 +219,8 @@
 
 
     for (let i = 0; i < qtde_voltas; i++) {
-      div_resp.innerHTML += `<span class='numeroVolta'>${i+1
-      }ª Volta</span><br>`;
+      div_resp.innerHTML += `<span class='numeroVolta'>${i + 1
+        }ª Volta</span><br>`;
       for (let j = 0; j < lista_cavalo.length; j++) {
         let random = Number((7 + Math.random() * 2).toFixed(1));
         lista_tempo[j] += random;
@@ -231,7 +234,7 @@
           </div>
           <br>
         `;
-        if(apostado == true){
+        if (apostado == true) {
           div_resp.innerHTML += `
             
           `
@@ -241,7 +244,7 @@
     }
     div_resp.innerHTML +=
       `
-      <button id="btn_podio" onclick="ver_podio()">Ver o Pódio</button>
+      <button id="btn_podio" class='btn btn_podio' onclick="ver_podio()">Ver o Pódio</button>
     `
   }
   // Inserção de nomes no vetor ordernado
@@ -258,13 +261,13 @@
         nome_cavalos.value = "";
         nome_cavalos.focus();
         div_listagem_cavalos.innerHTML +=
-        `
+          `
           <div class='card_listagem_cavalos' id='cavalo${contador_cavalos}' onclick='apostar_cavalo(ax_cavalos, cavalo${contador_cavalos})'>
             <img src='assets/imgs/iconeCavalo.png'>
             <span>${ax_cavalos}</span>
           </div>
         `
-      }else{
+      } else {
         alert('Esse cavalo já foi registrado!')
       }
 
@@ -292,9 +295,9 @@
     let tempo_podio = []
     let qtd_podio = 0
 
-    if(lista_cavalo.length <= 2){
+    if (lista_cavalo.length <= 2) {
       qtd_podio = 2
-    }else{
+    } else {
       qtd_podio = 3
     }
 
@@ -313,11 +316,11 @@
 
     div_resp.style.display = 'none'
     btn_podio.style.display = 'none'
-    div_podio.style.display = 'flex'
+    tela_podio.style.display = 'flex'
 
     cavalo_vencedor = nome_podio[0];
 
-    if(cavalo_vencedor == cavalo_de_ouro){
+    if (cavalo_vencedor == cavalo_de_ouro) {
       alert('Você venceu a aposta!');
     }
 
@@ -335,10 +338,10 @@
               <img src='assets/imgs/cavalo3.png'>
             </div>
       `
-      if(nome_podio.length == 2){
-        terceiro_lugar.style = 'display:none;';
-      }
-      body.style =
+    if (nome_podio.length == 2) {
+      terceiro_lugar.style = 'display:none;';
+    }
+    body.style =
       `
       background-image: url(assets/imgs/3.svg);
       background-color: rgba(0, 0, 0, 0.445);
@@ -481,7 +484,7 @@
 
 
 
-  
+
   function salvar_partida() {
     let = resultadoPartidaVar
     cobre_pagina.style.display = `flex`;

@@ -75,7 +75,7 @@ select{
 }
 
 /*---------------------- Itens Invisíveis ----------------------*/
-#div_cavalos, #btn_largada, #div_nome_cavalos, #div_podio,.card_usuario{
+#div_cavalos, #btn_largada, #div_nome_cavalos,.card_usuario, .tela_podio{
     display: none;
 }
 
@@ -281,17 +281,26 @@ select{
 /* Podio */
 
 #div_podio{
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: flex-end;
-    width:60%;
-    height: 80%;
+    width:50%;
+    height: 100%;
     align-self: flex-end;
     margin: 0 auto;
     margin-top: 20%;
     gap: 5%;
+    margin-bottom: 5%;
     /* border: 1px solid red; */
+}
 
+.tela_podio{
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
 }
 
 .podio{
@@ -308,16 +317,26 @@ select{
     height: auto;
 }
 
+.btn_podio{
+    width: 95%;
+    font-size: 25px;
+}
+
+.btn_salvar_podio{
+    height: 20%;
+    width: 50%;
+}
+
 .lugar_1{
     height: 100%;
     background-color: gold;
 }
 .lugar_2{
-    height: 75%;
+    height: 80%;
     background-color: silver;
 }
 .lugar_3{
-    height: 50%;
+    height: 75%;
     background-color: brown;
 }
 
