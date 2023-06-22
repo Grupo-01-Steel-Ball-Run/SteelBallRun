@@ -246,17 +246,21 @@
     if (ax_cavalos == "") {
       alert("Insira o nome do cavalo");
     } else {
-      contador_cavalos++
-      lista_cavalo.push(ax_cavalos)
-      nome_cavalos.value = "";
-      nome_cavalos.focus();
-      div_listagem_cavalos.innerHTML +=
+      if (lista_cavalo.indexOf(ax_cavalos) == -1) {
+        contador_cavalos++
+        lista_cavalo.push(ax_cavalos)
+        nome_cavalos.value = "";
+        nome_cavalos.focus();
+        div_listagem_cavalos.innerHTML +=
         `
-        <div class='card_listagem_cavalos' id='cavalo${contador_cavalos}' onclick='apostar_cavalo(ax_cavalos, cavalo${contador_cavalos})'>
-          <img src='assets/imgs/iconeCavalo.png'>
-          <span>${ax_cavalos}</span>
-        </div>
-      `
+          <div class='card_listagem_cavalos' id='cavalo${contador_cavalos}' onclick='apostar_cavalo(ax_cavalos, cavalo${contador_cavalos})'>
+            <img src='assets/imgs/iconeCavalo.png'>
+            <span>${ax_cavalos}</span>
+          </div>
+        `
+      }else{
+        alert('Esse cavalo já foi registrado!')
+      }
 
       if (lista_cavalo.length == qtde_cavalos) {
         input_nomes.innerHTML = '<h2 class="titulo_aposta">Em qual Cavalo Você Gostaria de Apostar?</h2>'
@@ -271,6 +275,7 @@
       id.style = 'background-color:gold;';
       id.innerHTML += '<span>&#11088</span>'
       apostado = true;
+      cavalo_de_ouro = nome
       input_nomes.style.display = 'none';
       btn_largada.style.display = "block";
     }
