@@ -35,18 +35,18 @@
     <button onclick="continuar()" class="btn btn_continuar">Continuar</button>
   </div>
 
-  
+
   <!-- <div id="div_erro"> Valores Inválidos! Digite um valor numérico positivo! </div> -->
-  
+
   <div id="div_nome_cavalos" class="div_secao">
     <div class="input_nomes" id="input_nomes">
-      <input id="nome_cavalos"  class="ipt_nome_cavalo" placeholder="Insira o nome do cavalo">
+      <input id="nome_cavalos" class="ipt_nome_cavalo" placeholder="Insira o nome do cavalo">
       <button id="btn_inserir" onclick="adicionar()" class="btn btn_inserir">Inserir</button>
     </div>
     <div id="div_listagem_cavalos" class="div_listagem_cavalos"></div>
     <button id="btn_largada" class="btn btn_largada" onclick="cronometro()">Largada</button>
   </div>
-  
+
   <div id="div_resp" class="div_secao"></div>
 
   <div id="div_podio">
@@ -81,6 +81,29 @@
           <button onclick="salvar_partida()">Salvar Partida</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <audio src="assets/imgs/mariostart.mp3" id="audio_contagem"></audio>
+  <audio src="assets/imgs/horse-race-pinoy.mp3" id="audio_iniciar"></audio>
+  <div class="modal" id="div_modal">
+    <div class="container_largada">
+      <div class="card_numero">
+        <div class="div_cor vermelho" id="div_vermelho"></div>
+        <div class="div_numero" id="div_numero_3"></div>
+      </div>
+      <div class="card_numero">
+        <div class="div_cor amarelo" id="div_amarelo"></div>
+        <div class="div_numero" id="div_numero_2"></div>
+      </div>
+      <div class="card_numero">
+        <div class="div_cor verde" id="div_verde"></div>
+        <div class="div_numero" id="div_numero_1"></div>
+      </div>
+    </div>
+    <div class="div_largada" id="div_mensagem_largada">
+      CORRIDA INICIADA
     </div>
   </div>
 </body>
@@ -132,7 +155,7 @@
 
   function cronometro() {
     body.style =
-    `
+      `
       background-image: url(assets/imgs/2.svg);
       background-color: rgba(0, 0, 0, 0.445);
       background-blend-mode: darken;
@@ -198,8 +221,8 @@
         let random = Number((7 + Math.random() * 2).toFixed(5));
         lista_tempo[j] += random;
         console.log(`${lista_tempo[j]}`)
-        div_resp.innerHTML += 
-        `
+        div_resp.innerHTML +=
+          `
           <div class='card_cavalo'>
               <span class='nome_cavalo'>Cavalo ${lista_cavalo[j]}</span>
               <span class='label'>Tempo da Volta: ${random} minutos</span>
@@ -210,8 +233,8 @@
       }
       div_resp.innerHTML += `<br><br>`
     }
-    div_resp.innerHTML += 
-    `
+    div_resp.innerHTML +=
+      `
       <button id="btn_podio" onclick="ver_podio()">Ver o Pódio</button>
     `
   }
@@ -223,31 +246,36 @@
     if (ax_cavalos == "") {
       alert("Insira o nome do cavalo");
     } else {
-      contador_cavalos++
-      lista_cavalo.push(ax_cavalos)
-      nome_cavalos.value = "";
-      nome_cavalos.focus();
-      div_listagem_cavalos.innerHTML += 
-      `
-        <div class='card_listagem_cavalos' id='cavalo${contador_cavalos}' onclick='apostar_cavalo(ax_cavalos, cavalo${contador_cavalos})'>
-          <img src='assets/imgs/iconeCavalo.png'>
-          <span>${ax_cavalos}</span>
-        </div>
-      `
+      if (lista_cavalo.indexOf(ax_cavalos) == -1) {
+        contador_cavalos++
+        lista_cavalo.push(ax_cavalos)
+        nome_cavalos.value = "";
+        nome_cavalos.focus();
+        div_listagem_cavalos.innerHTML +=
+        `
+          <div class='card_listagem_cavalos' id='cavalo${contador_cavalos}' onclick='apostar_cavalo(ax_cavalos, cavalo${contador_cavalos})'>
+            <img src='assets/imgs/iconeCavalo.png'>
+            <span>${ax_cavalos}</span>
+          </div>
+        `
+      }else{
+        alert('Esse cavalo já foi registrado!')
+      }
 
       if (lista_cavalo.length == qtde_cavalos) {
         input_nomes.innerHTML = '<h2 class="titulo_aposta">Em qual Cavalo Você Gostaria de Apostar?</h2>'
       }
     }
   }
-  
+
   // Função de apostar em um cavalo
   let apostado = false;
-  function apostar_cavalo(nome, id){
-    if(apostado == false){
+  function apostar_cavalo(nome, id) {
+    if (apostado == false) {
       id.style = 'background-color:gold;';
       id.innerHTML += '<span>&#11088</span>'
       apostado = true;
+      cavalo_de_ouro = nome
       input_nomes.style.display = 'none';
       btn_largada.style.display = "block";
     }
@@ -463,9 +491,9 @@
       }
     })
 
-    if(cavalo_de_ouro == cavalo_vencedor){
+    if (cavalo_de_ouro == cavalo_vencedor) {
       resultadoPartidaVar = 'Ganhador'
-    }else{
+    } else {
       resultadoPartidaVar = 'Perdedor'
     }
 
