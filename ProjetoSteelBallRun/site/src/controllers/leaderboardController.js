@@ -6,7 +6,6 @@ function autenticarLeaderboard(req, res) {
     if (fkUsuario == undefined) {
         res.status(400).send("Seu nick está undefined!");
     } else {
-
         leaderboardModel.autenticarLeaderboard(fkUsuario)
             .then(
                 function (resultadoAutenticar) {

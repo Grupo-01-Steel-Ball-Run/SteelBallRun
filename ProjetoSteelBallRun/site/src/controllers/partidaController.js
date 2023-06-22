@@ -132,9 +132,11 @@ function autenticarResultado(res) {
         );
 }
 
+
+
 module.exports = {
     autenticarPartida,
     cadastrarPartida,
     cadastrarResultado,
-    autenticarResultado
+    autenticarResultado,
 }
