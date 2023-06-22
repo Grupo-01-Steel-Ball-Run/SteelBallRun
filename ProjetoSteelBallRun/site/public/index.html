@@ -216,9 +216,10 @@
 
 
     for (let i = 1; i <= qtde_voltas; i++) {
-      div_resp.innerHTML += `<span class='numeroVolta'>${i}ª Volta</span><br>`;
+      div_resp.innerHTML += `<span class='numeroVolta'>${i+1
+      }ª Volta</span><br>`;
       for (let j = 0; j < lista_cavalo.length; j++) {
-        let random = Number((7 + Math.random() * 2).toFixed(5));
+        let random = Number((7 + Math.random() * 2).toFixed(1));
         lista_tempo[j] += random;
         console.log(`${lista_tempo[j]}`)
         div_resp.innerHTML +=
@@ -230,6 +231,11 @@
           </div>
           <br>
         `;
+        if(apostado == true){
+          div_resp.innerHTML += `
+            
+          `
+        }
       }
       div_resp.innerHTML += `<br><br>`
     }
@@ -312,6 +318,12 @@
               ${nome_podio[2]}
             </div>
       `
+      body.style =
+      `
+      background-image: url(assets/imgs/3.svg);
+      background-color: rgba(0, 0, 0, 0.445);
+      background-blend-mode: darken;
+    `
   }
 
   // BACKEND

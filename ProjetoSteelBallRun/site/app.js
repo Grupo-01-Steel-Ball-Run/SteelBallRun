@@ -10,7 +10,7 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var partidaRouter = require("./src/routes/partidas")
-var leaderboardRouter = require("./src/routes/leaderboard")
+var leaderboardRouter = require("./src/routes/leaderboards")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
