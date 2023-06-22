@@ -12,4 +12,8 @@ router.post("/autenticarLeaderboard", function (req, res) {
     leaderboardController.autenticarLeaderboard(req, res);
 });
 
+router.post("/updateLeaderboard", function (req, res) {
+    leaderboardController.updateLeaderboard(req, res);
+});
+
 module.exports = router;

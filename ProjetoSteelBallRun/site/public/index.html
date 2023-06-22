@@ -117,6 +117,7 @@
   var lista_cavalo = [];
   var lista_tempo = [];
   var contador_div = 0;
+  var ganhador = ''
 
   function continuar() {
     // usando a mesma função para executar a mudança de diferentes DIVS utilizando
@@ -216,8 +217,8 @@
 
 
     for (let i = 1; i <= qtde_voltas; i++) {
-      div_resp.innerHTML += `<span class='numeroVolta'>${i+1
-      }ª Volta</span><br>`;
+      div_resp.innerHTML += `<span class='numeroVolta'>${i + 1
+        }ª Volta</span><br>`;
       for (let j = 0; j < lista_cavalo.length; j++) {
         let random = Number((7 + Math.random() * 2).toFixed(1));
         lista_tempo[j] += random;
@@ -231,7 +232,7 @@
           </div>
           <br>
         `;
-        if(apostado == true){
+        if (apostado == true) {
           div_resp.innerHTML += `
             
           `
@@ -258,13 +259,13 @@
         nome_cavalos.value = "";
         nome_cavalos.focus();
         div_listagem_cavalos.innerHTML +=
-        `
+          `
           <div class='card_listagem_cavalos' id='cavalo${contador_cavalos}' onclick='apostar_cavalo(ax_cavalos, cavalo${contador_cavalos})'>
             <img src='assets/imgs/iconeCavalo.png'>
             <span>${ax_cavalos}</span>
           </div>
         `
-      }else{
+      } else {
         alert('Esse cavalo já foi registrado!')
       }
 
@@ -305,6 +306,11 @@
     btn_podio.style.display = 'none'
     div_podio.style.display = 'flex'
 
+    if (cavalo_vencedor == cavalo_de_ouro) {
+      ganhador = 'Vencedor'
+    } else {
+      ganhador = 'Perdedor'
+    }
     cavalo_vencedor = nome_podio[0]
 
     div_podio.innerHTML += `
@@ -318,7 +324,7 @@
               ${nome_podio[2]}
             </div>
       `
-      body.style =
+    body.style =
       `
       background-image: url(assets/imgs/3.svg);
       background-color: rgba(0, 0, 0, 0.445);
@@ -461,9 +467,10 @@
 
 
 
-  
+
   function salvar_partida() {
-    let = resultadoPartidaVar
+    let resultadoVar = ganhador
+    let resultadoPartidaVar
     cobre_pagina.style.display = `flex`;
 
     fetch("/partidas/cadastrarPartida", {
@@ -567,11 +574,65 @@
       console.log("ESTOU NO THEN DO entrar()!")
 
       if (resposta.ok) {
-        console.log(resposta);
-
         resposta.json().then(json => {
-
+          sessionStorage.QTD_VITORIAS = json.qtdVitorias
         });
+        let qtdVitorias = sessionStorage.QTD_VITORIAS
+        if(ganhador == 'Vencedor'){
+
+          qtdVitorias++
+        }
+        if (resposta[0] == 0 || resposta == [{}] || resposta[0] == {} || resposta[0] == '') {
+
+          fetch("/leaderboards/cadastrarLeaderboard", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              fkUsuario: sessionStorage.ID_USUARIO,
+              qtdVitoriasServer: qtdVitorias
+            })
+
+          }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+
+            } else {
+              throw ("Houve um erro ao tentar realizar o cadastro!");
+            }
+          }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+
+        } else {
+
+          fetch("/leaderboards/updateLeaderboard", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              fkUsuarioServer: sessionStorage.ID_USUARIO,
+              qtdVitoriasServer: qtdVitorias
+            })
+
+          }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+
+            } else {
+              throw ("Houve um erro ao tentar realizar o cadastro!");
+            }
+          }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+
+        }
 
       } else {
 
@@ -587,27 +648,6 @@
     })
 
 
-    fetch("/leaderboards/cadastrarLeaderboard", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        fkUsuario: sessionStorage.ID_USUARIO,
-      })
-
-    }).then(function (resposta) {
-
-      console.log("resposta: ", resposta);
-
-      if (resposta.ok) {
-
-      } else {
-        throw ("Houve um erro ao tentar realizar o cadastro!");
-      }
-    }).catch(function (resposta) {
-      console.log(`#ERRO: ${resposta}`);
-    });
-
   }
+
 </script>
