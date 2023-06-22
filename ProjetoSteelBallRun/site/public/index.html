@@ -83,33 +83,12 @@
       </div>
     </div>
   </div>
-
-  <!-- Area do Modal -->
-  <audio src="assets/imgs/mariostart.mp3" id="audio_contagem"></audio>
-  <audio src="assets/imgs/horse-race-pinoy.mp3" id="audio_iniciar"></audio>
-  <div class="modal" id="div_modal">
-    <div class="container_largada">
-      <div class="card_numero">
-        <div class="div_cor vermelho" id="div_vermelho"></div>
-        <div class="div_numero" id="div_numero_3"></div>
-      </div>
-      <div class="card_numero">
-        <div class="div_cor amarelo" id="div_amarelo"></div>
-        <div class="div_numero" id="div_numero_2"></div>
-      </div>
-      <div class="card_numero">
-        <div class="div_cor verde" id="div_verde"></div>
-        <div class="div_numero" id="div_numero_1"></div>
-      </div>
-    </div>
-    <div class="div_largada" id="div_mensagem_largada">
-      CORRIDA INICIADA
-    </div>
-  </div>
 </body>
 
 </html>
 <script>
+  var cavalo_de_ouro = ''
+  var cavalo_vencedor
   var qtde_voltas;
   var qtde_cavalos;
   var lista_cavalo = [];
@@ -210,6 +189,9 @@
     for (let i = 1; i <= qtde_cavalos; i++) {
       lista_tempo.push(0);
     }
+
+
+
     for (let i = 1; i <= qtde_voltas; i++) {
       div_resp.innerHTML += `<span class='numeroVolta'>${i}ª Volta</span><br>`;
       for (let j = 0; j < lista_cavalo.length; j++) {
@@ -288,6 +270,8 @@
     div_resp.style.display = 'none'
     btn_podio.style.display = 'none'
     div_podio.style.display = 'flex'
+
+    cavalo_vencedor = nome_podio[0]
 
     div_podio.innerHTML += `
             <div class='lugar2'> 
@@ -415,7 +399,7 @@
 
         resposta.json().then(json => {
           sessionStorage.NICK_USUARIO = json.nick;
-          alert(json.senha)
+          sessionStorage.ID_USUARIO = json.idUsuario;
           div_salvar.style.display = `flex`;
         });
 
@@ -436,6 +420,123 @@
   }
 
   function salvar_partida() {
+    let = resultadoPartidaVar
     cobre_pagina.style.display = `flex`;
+
+    fetch("/partidas/cadastrarPartida", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        qtdeCavalosServer: qtde_cavalos.value,
+        qtdeVoltasServer: qtde_voltas.value
+      })
+
+    }).then(function (resposta) {
+
+      console.log("resposta: ", resposta);
+
+      if (resposta.ok) {
+
+      } else {
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
+    fetch("/usuarios/autenticarPartida", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+        console.log(resposta);
+
+        resposta.json().then(json => {
+          sessionStorage.ID_PARTIDA = json.idPartida;
+        });
+      }
+    })
+
+    if(cavalo_de_ouro == cavalo_vencedor){
+      resultadoPartidaVar = 'Ganhador'
+    }else{
+      resultadoPartidaVar = 'Perdedor'
+    }
+
+    fetch("/partidas/cadastrarResultado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fkPartidaServer: sessionStorage.ID_PARTIDA,
+        fkUsuario: sessionStorage.ID_USUARIO,
+        cavaloServer: nome_podio[0],
+        resultadoServer: resultadoParidaVar
+      })
+
+
+    }).then(function (resposta) {
+
+      console.log("resposta: ", resposta);
+
+      if (resposta.ok) {
+
+      } else {
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
+    fetch("/usuarios/autenticarResultado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+        console.log(resposta);
+
+        resposta.json().then(json => {
+          sessionStorage.ID_RESULTADO = json.idResultado;
+        });
+      }
+    })
+
+    fetch("/leaderboard/cadastrarLeaderboard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fkPartidaServer: sessionStorage.ID_PARTIDA,
+        fkUsuario: sessionStorage.ID_USUARIO,
+        cavaloServer: nome_podio[0],
+        resultadoServer: resultadoParidaVar
+      })
+
+
+    }).then(function (resposta) {
+
+      console.log("resposta: ", resposta);
+
+      if (resposta.ok) {
+
+      } else {
+        throw ("Houve um erro ao tentar realizar o cadastro!");
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+
   }
 </script>
