@@ -446,7 +446,7 @@
       console.log(`#ERRO: ${resposta}`);
     });
 
-    fetch("/usuarios/autenticarPartida", {
+    fetch("/partidas/autenticarPartida", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -495,11 +495,31 @@
       console.log(`#ERRO: ${resposta}`);
     });
 
-    fetch("/usuarios/autenticarResultado", {
-      method: "GET",
+    // fetch("/partidas/autenticarResultado", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    // }).then(function (resposta) {
+    //   console.log("ESTOU NO THEN DO entrar()!")
+
+    //   if (resposta.ok) {
+    //     console.log(resposta);
+
+    //     resposta.json().then(json => {
+    //       sessionStorage.ID_RESULTADO = json.idResultado;
+    //     });
+    //   }
+    // })
+
+    fetch("/leaderboards/autenticarLeaderboard", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
+      body: JSON.stringify({
+        fkUsuarioServer: sessionStorage.ID_USUARIO,
+      })
     }).then(function (resposta) {
       console.log("ESTOU NO THEN DO entrar()!")
 
@@ -507,12 +527,26 @@
         console.log(resposta);
 
         resposta.json().then(json => {
-          sessionStorage.ID_RESULTADO = json.idResultado;
+          sessionStorage.NICK_USUARIO = json.nick;
+          sessionStorage.ID_USUARIO = json.idUsuario;
+          div_salvar.style.display = `flex`;
+        });
+
+      } else {
+
+        console.log("Houve um erro ao tentar realizar o login!");
+
+        resposta.text().then(texto => {
+          console.error(texto);
         });
       }
+
+    }).catch(function (erro) {
+      console.log(erro);
     })
 
-    fetch("/leaderboard/cadastrarLeaderboard", {
+
+    fetch("/leaderboards/cadastrarLeaderboard", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -523,7 +557,6 @@
         cavaloServer: nome_podio[0],
         resultadoServer: resultadoParidaVar
       })
-
 
     }).then(function (resposta) {
 

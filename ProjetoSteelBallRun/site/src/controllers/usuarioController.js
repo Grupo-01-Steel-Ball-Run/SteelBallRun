@@ -25,7 +25,6 @@ function autenticar(req, res) {
                             });
                     } else if (resultadoAutenticar.length == 0) {
                         if(verificacao == true){
-                            console.log(`socorro`)
                             res.json({
                             });
                             return 

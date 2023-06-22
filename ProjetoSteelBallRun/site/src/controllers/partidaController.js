@@ -114,16 +114,10 @@ function autenticarResultado(res) {
                 if (resultadoAutenticar.length == 1) {
                     console.log(resultadoAutenticar);
                         res.json({
-                            nick: resultadoAutenticar[0].nick,
-                            senha: resultadoAutenticar[0].senha,
+                            idResultado: resultadoAutenticar[0].idResultado,
+
                         });
                 } else if (resultadoAutenticar.length == 0) {
-                    if(verificacao == true){
-                        console.log(`socorro`)
-                        res.json({
-                        });
-                        return 
-                    }
                     res.status(403).send("nick e/ou senha inválido(s)");
                 } else {
                     res.status(403).send("Mais de um usuário com o mesmo login e senha!");
@@ -141,5 +135,6 @@ function autenticarResultado(res) {
 module.exports = {
     autenticarPartida,
     cadastrarPartida,
-    cadastrarResultado
+    cadastrarResultado,
+    autenticarResultado
 }
