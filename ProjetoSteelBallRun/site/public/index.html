@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="divVoltas">
+        <div class="grupoElemento">
+          <select name="quantidadeVoltas" id="numeroVoltas">
+            <option value="0">Selecionar Voltas</option>
+            <option value="5">5 Voltas</option>
+            <option value="6">6 Voltas</option>
+            <option value="7">7 Voltas</option>
+            <option value="8">8 Voltas</option>
+            <option value="9">9 Voltas</option>
+            <option value="10">10 Voltas</option>
+          </select>
+        </div>
+        <button onclick="continuar()">
+          <span class="btnText">Continuar</span>
+        </button>
+      </div>
+      <div id="divCavalos">
+        <select name="quantidadeCavalos" id="numeroCavalos">
+          <option value="0">Selecionar Quantidade Cavalos</option>
+          <option value="3">3 Cavalos</option>
+          <option value="4">4 Cavalos</option>
+          <option value="5">5 Cavalos</option>
+          <option value="6">6 Cavalos</option>
+        </select>
+        <button onclick="continuar()">
+          <span class="btnText">Continuar</span>
+        </button>
+        <div id="divNomes"></div>
+      </div>
+      <div id="divResp"></div>
+      <div id="divErro">
+        Valores Inválidos! Digite um valor numérico positivo!
+      </div>
+  
+      <div id="nome_cavalos" style="display: none">
+        <div class="input_nomes" id="input_nomes">
+          <input id="nomeCavalos" /> Insira o nome do cavalo
+          <button id="btn_inserir" onclick="adicionar()">Inserir</button>
+        </div>
+      </div>
+      <button id="btn_largada" onclick="iniciar()">Largada</button>
+      <button id="btn_podio" onclick="ver_podio()"  style="display: none;">Ver o pódio</button>
+      <div id="podio">
+        <div style="display: none;" class="card_usuario">
+            <div id="usuario_conexao">
+                <div id='div_login'>
+                    <h1>Faça o login para salvar sua partida</h1>
+                    <b>Nome de usuario</b>
+                    <input type="text" id="ipt_nome_usuario">
+                    <b>Senha</b>
+                    <input type="password" id="ipt_senha_usuario">
+                    <h4>Ainda não possui uma conta? <p onclick="cadastro()">Crie aqui!</p>
+                    </h4>
+                    <button onclick="login()">Login</button>
+                    <button onclick="voltar('sair')">Sair</button>
+                </div>
+                <div id="div_cadastro">
+                    <h1>Bem vindo ao Stell Ball Run!</h1>
+                    <h3>Faça seu cadastro para salvar suas partidas e participar do nosso Leaderboard!</h3>
+                    <b>Nome de usuario</b>
+                    <input type="text" id="ipt_nome_cadastro">
+                    <b>Senha</b>
+                    <input type="text" id="ipt_senha_cadastro">
+                    <b>Repetir Senha</b>
+                    <input type="text" id="ipt_confirmacao_cadastro">
+                    <button onclick="cadastrar()">Cadastre-se</button>
+                    <button onclick="voltar('login')">Voltar para o Login</button>
+                </div>
+                <div id="div_salvar">
+                    <h1>Salve sua partida!</h1>
+                    <h3>Salve e participe do LeaderBoard!</h3>
+                    <button onclick="salvarPartida()">Salvar Partida</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </body>
+  </html>
+  <script>
+    var qtde_voltas;
+    var qtde_cavalos;
+    var lista_cavalo = [];
+    var lista_tempo = [];
+    var contador_div = 0;
+  
+    function continuar() {
+      // usando a mesma função para executar a mudança de diferentes DIVS utilizando
+      // um contador
+      contador_div++;
+      if (contador_div == 1) {
+        qtde_voltas = numeroVoltas.value;
+        if (qtde_voltas == 0) {
+          // Aqui é para aparecer um erro e não seguir
+          // Troque para a div erro
+          alert("Selecione o número de voltas correto");
+          contador_div--;
+          return;
+        }
+  
+        divVoltas.style.display = "none";
+        divCavalos.style.display = "flex";
+      } else if (contador_div == 2) {
+        qtde_cavalos = numeroCavalos.value;
+  
+        if (qtde_cavalos == 0) {
+          // Aqui é para aparecer um erro e não seguir
+          // Troque para a div erro
+          alert("Selecione o número de cavalos correto");
+          contador_div--;
+          return;
+        }
+  
+        divVoltas.style.display = "none";
+        divCavalos.style.display = "flex";
+      } else if (contador_div == 3) {
+        nome_cavalos.style.display = "flex";
+        divCavalos.style.display = "none";
+      }
+    }
+    // divResp.style = "display:none;";
+    // divErro.style = "display:none;";
+    function iniciar() {
+      btn_largada.style.display = "none";
+  
+      divResp.innerHTML = "";
+      for (let i = 1; i <= qtde_cavalos; i++) {
+        lista_tempo.push(0);
+      }
+      alert(lista_tempo)
+      for (let i = 1; i <= qtde_voltas; i++) {
+        divResp.innerHTML += `<span class='numeroVolta'>${i}ª Volta</span><br>`;
+        for (let j = 0; j < lista_cavalo.length; j++) {
+          let random = Number((7 + Math.random() * 2).toFixed(1));
+          lista_tempo[j] += random;
+          console.log(`${lista_tempo[j]}`)
+          divResp.innerHTML += `
+                              <div class='cardCavalo'>
+                                  <span class='nomeCavalo'>Cavalo ${
+                                    lista_cavalo[j]
+                                  }</span>
+                                  <span class='label'>Tempo da Volta: ${random} minutos</span>
+                                  <span class='label'>Tempo Acumulado: ${lista_tempo[j].toFixed(1)} minutos</span>
+                              </div>
+                              <br>
+                          `;
+        }
+        divResp.innerHTML += `<br><br>`;
+      }
+      btn_podio.style.display = "block"
+      divResp.innerHTML += `
+              Fim da Corrida!
+              <br><br>
+  
+          `;
+      desaparecerDiv();
+    }
+    // Inserção de nomes no vetor ordernado
+    var ax_cavalos = "";
+    function adicionar() {
+      ax_cavalos = nomeCavalos.value;
+      if (ax_cavalos == "") {
+        alert("Insira o nome do cavalo");
+      } else {
+        lista_cavalo.push(ax_cavalos);
+        nomeCavalos.value = "";
+        if (lista_cavalo.length == qtde_cavalos) {
+          nome_cavalos.style.display = "none";
+          btn_largada.style.display = "block";
+        }
+      }
+    }
+  
+    function ver_podio(){
+      let nomePodio = []
+      let tempoPodio = []
+      for(let i = 0; i < 3; i++){
+          let indexDo = lista_tempo.indexOf(Math.min(...lista_tempo))
+          nomePodio.push(lista_cavalo[indexDo])
+          tempoPodio.push(lista_tempo[indexDo])
+          // O console diz que aqui não é uma function
+          lista_tempo.splice(indexDo,1)
+          lista_cavalo.splice(indexDo,1)
+      }
+      nomePodio.reverse()
+      tempoPodio.reverse()
+      alert(nomePodio, tempoPodio)
+    }
+  
+    function desaparecerDiv() {
+      divResp.style = "display:flex;";
+      // divInicio.style = "display:none;";
+    }
+    //   function verificarCampo() {
+    //     let quantidadeCavalos = numero_cavalos.value;
+  
+    //     if (quantidadeCavalos <= 0 || isNaN(quantidadeCavalos)) {
+    //       divErro.style = "display:flex;";
+    //       setTimeout(() => {
+    //         divErro.style = "display:none;";
+    //       }, 2000);
+    //       return false;
+    //     } else {
+    //       return true;
+    //     }
+    //   }
+    //   t = 1000;
+    //   for (let h = 0; h <= 10; h++) {
+    //     setTimeout(() => {
+    //       console.log(h);
+    //     }, t);
+    //     t += 500;
+    //   }
+  
+    //   function cavalos_dados() {
+    //     if( )
+    //     for (let index = 0; index <= qtde_cavalos; index++) {
+    //       nome_cavalos.innerHTML += `<input type="text" name="" id="ipt_nome" placeholder="Digite o nome do cavalo ${index}">`;
+    //     }
+    //   }
+
+
+    // BACKEND
+
+    function voltar(local) {
+        if (local == 'sair') {
+            cobre_pagina.style.display = `none`;
+        } else {
+            div_cadastro.style.display = `none`;
+            div_login.style.display = `flex`;
+        }
+    }
+    function cadastro() {
+        div_cadastro.style.display = `flex`;
+        div_login.style.display = `none`;
+    }
+    function cadastrar() {
+
+        var nomeVar = ipt_nome_cadastro.value;
+        var senhaVar = ipt_senha_cadastro.value;
+        var confirmacaoSenhaVar = ipt_confirmacao_cadastro.value;
+        var verificacaoVar = true
+
+        if (nomeVar == "" || senhaVar == "" || confirmacaoSenhaVar == "") {
+            alert(`Não podem existir campos em branco.`)
+            return false;
+        } else if (senhaVar != confirmacaoSenhaVar) {
+            alert(`As senhas não coincidem`)
+        }
+
+        //  VERIFICANDO SE JÁ NÃO EXISTE O NICK CADASTRADO
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: nomeVar,
+                senhaServer: senhaVar,
+                verificacaoServer: verificacaoVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                // Enviando o valor da nova input
+                if (resposta[0] != nomeVar) {
+                    fetch("/usuarios/cadastrar", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            nomeServer: nomeVar,
+                            senhaServer: senhaVar
+                        })
+
+                    }).then(function (resposta) {
+
+                        console.log("resposta: ", resposta);
+
+                        if (resposta.ok) {
+
+                        } else {
+                            throw ("Houve um erro ao tentar realizar o cadastro!");
+                        }
+                    }).catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                    });
+
+                    return false;
+                } else{
+                    alert(`Foi encontrado um usuário com este nome, por favor insira um nome diferente.`)
+                    return false;
+                }
+
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function login() {
+        var nomeVar = ipt_nome_usuario.value;
+        var senhaVar = ipt_senha_usuario.value;
+        var verificacaoVar = false
+
+        if (nomeVar == "" || senhaVar == "") {
+            alert(`Não podem existir campos em branco.`)
+            return false;
+        }
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: nomeVar,
+                senhaServer: senhaVar,
+                verificacaoServer: verificacaoVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    sessionStorage.NICK_USUARIO = json.nick;
+                    alert(json.senha)
+                    div_salvar.style.display = `flex`;
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function salvarPartida() {
+        cobre_pagina.style.display = `flex`;
+
+    }
+  </script>

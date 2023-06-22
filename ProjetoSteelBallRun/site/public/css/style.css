@@ -1,0 +1,175 @@
+@font-face {
+    font-family: 'lobster';
+    src: url(../css/Lobster-Regular.ttf);
+}
+
+*{
+    font-family: 'lobster';
+}
+
+body, html{
+    margin:0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+}
+
+body{
+    background-image: url(../assets/imgs/T_U_R_F_E.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#divCavalos, #divVoltas{
+    width: 80%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    margin-top: 15%;
+}
+
+#divCavalos{
+    display: none;
+}
+
+#divVoltas button{
+    background-image: none;
+    background-color: chocolate;
+}
+
+#divVoltas .btnText{
+    font-family: 'lobster';
+    background-color: rgb(126, 66, 23);
+    color: white;
+    border-radius: .5rem;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+#divVoltas select{
+    width: 30%;
+    height: 20%;
+    border-radius: .5rem;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'lobster';
+}
+
+#divVoltas .grupoElemento{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction:  column;
+    justify-content: center;
+    align-items: center;
+}
+
+#divErro{
+    display: none;
+    width: 300px;
+    margin-right: 30px;
+    height: 150px;
+    position: absolute;
+    align-self: flex-end;
+    background-color: rgb(250, 79, 79);
+    justify-content: center;
+    align-items: center;
+    border-radius: .5rem;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+}
+
+
+#divResp{
+    display:none;
+    width: 35%;
+    overflow-y: auto;
+    height: 45%;
+    margin-top: 25%;
+    align-items: center;
+    justify-content: baseline;
+    flex-direction: column;
+    background-color: aliceblue;
+    border-radius: .5rem;
+    padding-top: 15px;
+    box-shadow: 10px 10px 50px white;
+}
+
+input{
+    width: 40%;
+    height: 20%;
+    border: none;
+    border-radius: .5rem;
+    text-align: center;
+    font-size: 20px;
+}
+
+button{
+    width: 35%;
+    height: 20%;
+    font-size: 35px;
+    letter-spacing: 10px;
+    border: none;
+    border-radius: .5rem;
+    background-image: url(bandeira.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 5px 10px black;
+}
+
+.btnText{
+    font-family: 'lobster';
+    background-color: rgb(250, 83, 83);
+    color: white;
+    border-radius: .5rem;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.cardCavalo{
+    width: 80%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to right, rgb(255, 110, 110), rgb(255, 97, 97));
+    border-radius: .5rem;
+    padding: 10px;
+}
+
+.numeroVolta{
+    margin-left: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'lobster';
+    letter-spacing: 8px;
+}
+
+.nomeCavalo{
+    font-weight: 600;
+    color: white;
+}
+
+.label{
+    margin-top: 5px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+#btn_largada{
+    display: none;
+}
+
+/* ABAIXO ESTÁ A ESTILIZAÇÃO DA PARTE LEADERBOARD E CONEXAO DO USUARIO */
