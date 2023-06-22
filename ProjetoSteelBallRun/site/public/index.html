@@ -35,10 +35,9 @@
     <button onclick="continuar()" class="btn btn_continuar">Continuar</button>
   </div>
 
-  <div id="div_resp" class="div_secao"></div>
-
+  
   <!-- <div id="div_erro"> Valores Inválidos! Digite um valor numérico positivo! </div> -->
-
+  
   <div id="div_nome_cavalos" class="div_secao">
     <div class="input_nomes" id="input_nomes">
       <input id="nome_cavalos"  class="ipt_nome_cavalo" placeholder="Insira o nome do cavalo">
@@ -47,8 +46,8 @@
     <div id="div_listagem_cavalos" class="div_listagem_cavalos"></div>
     <button id="btn_largada" class="btn btn_largada" onclick="cronometro()">Largada</button>
   </div>
-
-  <button id="btn_podio" onclick="ver_podio()" style="display: none;">Ver o pódio</button>
+  
+  <div id="div_resp" class="div_secao"></div>
 
   <div id="div_podio">
     <div class="card_usuario">
@@ -155,6 +154,7 @@
   function cronometro() {
     body.style =
     `
+      background-image: url(assets/imgs/2.svg);
       background-color: rgba(0, 0, 0, 0.445);
       background-blend-mode: darken;
     `
@@ -196,7 +196,8 @@
           div_mensagem_largada.style = 'display:flex;';
           setTimeout(() => {
             div_modal.style = 'display:none;';
-            iniciar()
+            body.style = `background-color: transparent;`;
+            iniciar();
           }, 8000);
         }
       }, t);
@@ -204,8 +205,7 @@
   }
 
   function iniciar() {
-    btn_largada.style.display = "none";
-
+    div_resp.style.display = 'flex';
     div_resp.innerHTML = "";
     for (let i = 1; i <= qtde_cavalos; i++) {
       lista_tempo.push(0);
@@ -228,8 +228,10 @@
       }
       div_resp.innerHTML += `<br><br>`
     }
-    btn_podio.style.display = "block"
-    div_resp.style = "display:flex;"
+    div_resp.innerHTML += 
+    `
+      <button id="btn_podio" onclick="ver_podio()">Ver o Pódio</button>
+    `
   }
   // Inserção de nomes no vetor ordernado
   var ax_cavalos = ""
